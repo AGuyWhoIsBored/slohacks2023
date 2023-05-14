@@ -1,7 +1,19 @@
 <script lang="ts">
-	let enteredClasses: string;
+	let data;
 
-	$: console.log('classes', enteredClasses);
+	// state for class entry
+	let enteredClasses = '';
+	$: formattedClasses = enteredClasses.split('\n').filter((entry) => entry.length);
+
+	// state for curriculum sheet selection
+	let selectedCurriculumSheet = '';
+
+	// state for input validation
+	$: validInput = selectedCurriculumSheet !== '' && formattedClasses.length > 0;
+
+	$: console.log('formattedclasses', formattedClasses);
+	$: console.log('selectedsheet', selectedCurriculumSheet);
+	$: console.log('validinput', validInput);
 </script>
 
 <div class="appContainer m-4">
@@ -25,25 +37,61 @@
 				</p>
 			</div>
 
-			<div class="flex w-full flex-grow">
-				<div class="grid flex-grow">
-					<div>
+			<div class="flex flex-grow">
+				<div class="grid flex-grow grid-flow-col grid-cols-2">
+					<div class="border-r-2">
 						<div>
 							<h2 class="text-center text-2xl font-medium mt-4">Enter Classes Here</h2>
 							<div class="divider mx-8 h-0" />
 						</div>
 						<textarea
-							class="w-full h-72 resize-none border-2"
+							class="w-[96%] mx-4 h-72 resize-none border-2"
 							placeholder="Enter your courses here, one on each line"
 							bind:value={enteredClasses}
 						/>
+
+						<div class="mt-6">
+							<h2 class="text-center text-2xl font-medium mt-4">Select Curriculum Sheet</h2>
+							<div class="divider mx-8 h-0" />
+						</div>
+
+						<select
+							class="w-[96%] mx-4 select select-sm select-bordered"
+							bind:value={selectedCurriculumSheet}
+						>
+							<option selected disabled value="">Select a Curriculum Sheet ...</option>
+							<option value="hello1">hello1</option>
+							<option value="hello2">hello2</option>
+						</select>
+
+						<div class="mt-40">
+							{#if formattedClasses.length === 0}
+								<p class="ml-4 text-sm text-red-500">
+									Please enter a list of courses before submitting.
+								</p>
+							{:else}
+								<!-- nice -->
+								<p class="ml-4 text-sm text-white">all good!</p>
+							{/if}
+
+							{#if selectedCurriculumSheet === ''}
+								<p class="ml-4 text-sm text-red-500">
+									Please select a curriculum sheet before submitting.
+								</p>
+							{:else}
+								<p class="ml-4 text-sm text-white">all good!</p>
+							{/if}
+							<button disabled={!validInput} class="w-[96%] mx-4 btn btn-success text-white mt-4"
+								>Submit</button
+							>
+						</div>
 					</div>
-				</div>
-				<div class="divider divider-horizontal" />
-				<div class="grid flex-grow">
+
 					<div>
-						<h2 class="text-center text-2xl font-medium mt-4">Validation Results</h2>
-						<div class="divider mx-8 h-0" />
+						<div>
+							<h2 class="text-center text-2xl font-medium mt-4">Validation Results</h2>
+							<div class="divider mx-8 h-0" />
+						</div>
 					</div>
 				</div>
 			</div>
