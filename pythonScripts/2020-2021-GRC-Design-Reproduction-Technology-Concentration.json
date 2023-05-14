@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Required Concentration Courses",
+    "type": "And",
+    "classes": [
+      "ART102",
+      "ART103",
+      "GRC339",
+      "GRC439",
+      "GRC440"
+    ]
+  },
+  {
+    "name": "Approved Concentration Electives",
+    "type": "NUnitsOf",
+    "number": "9",
+    "classes": [
+      "GRC322",
+      "GRC331",
+      "GRC429",
+      "GRC451",
+      "GRC452",
+      "GRC453"
+    ]
+  }
+]

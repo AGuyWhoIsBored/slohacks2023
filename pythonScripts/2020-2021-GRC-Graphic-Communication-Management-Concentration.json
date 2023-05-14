@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Required Concentration Courses",
+    "type": "And",
+    "classes": [
+      "BUS207",
+      "BUS212",
+      "BUS382",
+      "COMS213",
+      "GRC421"
+    ]
+  },
+  {
+    "name": "Approved Concentration Electives",
+    "type": "NUnitsOf",
+    "number": "9",
+    "classes": [
+      "GRC220",
+      "GRC357",
+      "GRC451",
+      "GRC452",
+      "BUS303",
+      "BUS310",
+      "ENGL310"
+    ]
+  }
+]

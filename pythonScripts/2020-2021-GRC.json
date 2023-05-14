@@ -1,0 +1,62 @@
+[
+  { "name": "Major Courses",
+    "type": "CompoundAnd",
+    "rules": [
+      { "name": "Required Courses",
+        "type": "And",
+        "classes": [
+          "GRC101",
+          "GRC102",
+          "GRC201",
+          "GRC203",
+          "GRC204",
+          "GRC211",
+          "GRC224",
+          "GRC301",
+          "GRC316",
+          "GRC318",
+          "GRC320",
+          "GRC328",
+          "GRC329",
+          "GRC337",
+          "GRC338",
+          "GRC361",
+          "GRC372",
+          "GRC402",
+          "GRC404",
+          "GRC411",
+          "GRC422"
+        ]
+      },
+      {"name": "Senior Project",
+        "type": "Or",
+        "classes": [
+          "GRC461",
+          "GRC462",
+          "GRC463"
+        ]
+      }
+    ]
+  },
+  { "name": "Support Courses",
+    "type": "CompoundAnd",
+    "rules": [
+      { "name": "PHYS 104 or PHYS 121",
+        "type": "Or",
+        "classes": [
+          "PHYS104",
+          "PHYS121"
+        ]
+      },
+
+      { "name": "Remaining Support",
+        "type": "And",
+        "classes": [
+          "CHEM110",
+          "MATH118",
+          "STAT217"
+        ]
+      }
+    ]
+  }
+]

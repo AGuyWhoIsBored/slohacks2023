@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Required Concentration Courses",
+    "type": "And",
+    "classes": [
+      "FSN354",
+      "GRC357",
+      "GRC421",
+      "ITP330",
+      "ITP408"
+    ]
+  },
+  {
+    "name": "Approved Concentration Electives",
+    "type": "NUnitsOf",
+    "number": "11",
+    "classes": [
+      "GRC331",
+      "GRC452",
+      "ITP341",
+      "ITP441",
+      "ITP430",
+      "ITP475"
+    ]
+  }
+]
