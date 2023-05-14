@@ -16,17 +16,33 @@
 	$: console.log('selectedsheet', selectedCurriculumSheet);
 	$: console.log('validinput', validInput);
 
+	let statusText = 'Status: Not Yet Run';
+	let resParsed: any[] | null = null;
+
+	$: console.log('resparsed', resParsed);
+
+	$: {
+		resParsed;
+
+		if (resParsed) {
+			statusText = `Status: Validation ${resParsed.length > 0 ? 'FAILURE' : 'SUCCESS'}`;
+		}
+	}
+
 	async function submitCurriculumValidationTask() {
-		await fetch('http://localhost:8080/curriculum', {
+		const res: string = await fetch('http://localhost:8080/curriculum', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				curriculumName: selectedCurriculumSheet,
-				classes: formattedClasses
+				CurriculumName: selectedCurriculumSheet,
+				Classes: formattedClasses
 			})
-		});
+		}).then((resp) => resp.json());
+
+		// res will be a string at this point, convert to json
+		resParsed = JSON.parse(res.replace(/'/g, '"'));
 	}
 </script>
 
@@ -109,6 +125,19 @@
 							<h2 class="text-center text-2xl font-medium mt-4">Validation Results</h2>
 							<div class="divider mx-8 h-0" />
 						</div>
+
+						<h3 class="ml-4 text-lg">{statusText}</h3>
+
+						{#if resParsed && resParsed.length > 0}
+							<div class="ml-4 mt-8">
+								<h3>Missing Requirements:</h3>
+								<ol class="ml-8">
+									{#each resParsed as entry}
+										<li class="list-decimal">{entry.join(', ')}</li>
+									{/each}
+								</ol>
+							</div>
+						{/if}
 					</div>
 				</div>
 			</div>
