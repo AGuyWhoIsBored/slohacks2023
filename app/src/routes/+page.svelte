@@ -1,5 +1,5 @@
 <script lang="ts">
-	let data;
+	export let data;
 
 	// state for class entry
 	let enteredClasses = '';
@@ -11,6 +11,7 @@
 	// state for input validation
 	$: validInput = selectedCurriculumSheet !== '' && formattedClasses.length > 0;
 
+	$: console.log('ssr data', data);
 	$: console.log('formattedclasses', formattedClasses);
 	$: console.log('selectedsheet', selectedCurriculumSheet);
 	$: console.log('validinput', validInput);
@@ -60,8 +61,9 @@
 							bind:value={selectedCurriculumSheet}
 						>
 							<option selected disabled value="">Select a Curriculum Sheet ...</option>
-							<option value="hello1">hello1</option>
-							<option value="hello2">hello2</option>
+							{#each data.curriculums as curriculum}
+								<option value={curriculum}>{curriculum}</option>
+							{/each}
 						</select>
 
 						<div class="mt-40">
