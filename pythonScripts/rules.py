@@ -7,6 +7,9 @@ class OrClasses():
         self.satisfied = False
         self.name = name
 
+    def __repr__(self):
+        return self.name
+
     def getName(self) -> str:
         """returns the human-friendly name associated with the rule"""
         return self.name
@@ -41,6 +44,9 @@ class AndClasses():
         self.savedClasses = classes.copy()
         self.satisfied = False
         self.name = name
+
+    def __repr__(self):
+        return self.name
 
     def getName(self) -> str:
         """returns the human-friendly name associated with the rule"""
@@ -78,6 +84,9 @@ class NUnitsOfClasses():
         self.unitsFulfilled = 0
         self.name = name
 
+    def __repr__(self):
+        return self.name
+
     def getName(self) -> str:
         """returns the human-friendly name associated with the rule"""
         return self.name
@@ -114,6 +123,9 @@ class NoDoubleCountRules():
         self.rulesAndApplicableClasses = {rule: [] for rule in rules}
         self.satisfied = False
         self.name = name
+
+    def __repr__(self):
+        return self.name
 
     def getName(self) -> str:
         """returns the human-friendly name associated with the rule"""
@@ -184,6 +196,9 @@ class OrRules():
         self.satisfied = False
         self.name = name
 
+    def __repr__(self):
+        return self.name
+
     def getName(self):
         return self.name
 
@@ -216,6 +231,9 @@ class AndRules():
         self.rules = rules
         self.savedRules = rules.copy()
         self.name = name
+
+    def __repr__(self):
+        return self.name
 
     def getName(self):
         return self.name

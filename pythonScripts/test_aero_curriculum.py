@@ -19,11 +19,12 @@ def main():
                      "AERO447", "AERO448", "AERO449",
                      "AERO360", "AERO432", "AERO566"]
 
-    satisfyingClasses = json_to_rules.getSatisfyingGESet("2020-2021-GE.json")
+    satisfyingClasses = json_to_rules.getSatisfyingGESet(
+        "original-2020-2021-GE.json")
     sampleCourses += satisfyingClasses
 
     courseDatabase = json_to_rules.parseCourseData("2020-2021.json")
-    geRules = json_to_rules.parseGEReqs("2020-2021-GE.json")
+    geRules = json_to_rules.parseRules("2020-2021-GE.json")
     aeroRules = json_to_rules.parseRules("2020-2021-AERO.json")
     astronauticsRules = json_to_rules.parseRules(
         "2020-2021-AERO-Astronautics-Concentration.json")

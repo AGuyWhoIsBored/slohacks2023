@@ -13,7 +13,8 @@ def parseCourseData(fileName):
     return d
 
 
-def parseGEReqs(fileName) -> rules.NoDoubleCountRules:
+def deprecated_parseGEReqs(fileName):
+    """Well-formatted GE Reqs should simply use parseRules()"""
     f = open(fileName, "r")
     reqs = json.load(f)
     rulesSet = set()
@@ -70,7 +71,7 @@ def getSatisfyingGESet(fileName):
 
 def main():
     courseData = parseCourseData("2020-2021.json")
-    GERules = parseGEReqs("2022-2026-GE.json")
+    GERules = deprecated_parseGEReqs("2022-2026-GE.json")
     satisfyingClasses = getSatisfyingGESet("2022-2026-GE.json")
     for cl in satisfyingClasses:
         GERules.process(cl, courseData)
