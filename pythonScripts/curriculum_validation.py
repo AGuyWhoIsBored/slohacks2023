@@ -1,8 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/local/bin/python3
 
 import json_to_rules
 import rules
 import sys
+import os
 
 
 def parseCurriculumFiles(fileName):
@@ -29,9 +30,17 @@ def writeResult(outfileName, curriculum, courseDatabase):
 
 
 def main(args):
+    
+    # if executing from backend, change cwd so paths work
+    if os.getcwd()[-9:] == 'goBackend':
+        os.chdir(os.getcwd() + '/../pythonScripts')
+
     # fail silently if incorrect number of args :)
     # >:(
     print("executing python script")
+    print('args', args)
+    print('cwd', os.getcwd())
+
     if (len(args) != 5):
         return
 

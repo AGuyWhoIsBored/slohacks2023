@@ -22,14 +22,30 @@ type classContext struct {
 var curriculumNames = []string{"Astronautics", "Aeronautics", "GRC for Packaging", "GRC for Design Reproduction Technology", "GRC for Communication Managing"}
 
 var commits = map[string]string{
-	"Astronautics":                           "../pythonScripts/astronauticsCurriculum.txt",
-	"Aeronautics":                            "../pythonScripts/aeronauticsCurriculum.txt",
-	"GRC for Packaging":                      "../pythonScripts/grcPackingCurriculum.txt",
-	"GRC for Design Reproduction Technology": "../pythonScripts/grcReproductionCurriculum.txt",
-	"GRC for Communication Managing":         "../pythonScripts/grcManagementCurriculum.txt",
+	"Astronautics":                           "astronauticsCurriculum.txt",
+	"Aeronautics":                            "aeronauticsCurriculum.txt",
+	"GRC for Packaging":                      "grcPackingCurriculum.txt",
+	"GRC for Design Reproduction Technology": "grcReproductionCurriculum.txt",
+	"GRC for Communication Managing":         "grcManagementCurriculum.txt",
 }
 
 func main() {
+
+	var asdf = []string{"AERO121", "AERO215", "AERO299"}
+	var classRequest = "sampleCoursesMissing.txt"
+	var classResults = "go-out.txt"
+    writeArrToFile("classRequest", asdf)
+    cmd := exec.Command("bash", "-c", "python3 ../pythonScripts/curriculum_validation.py" + " " + commits["Astronautics"] + " 2020-2021.json " + classRequest + " " + classResults)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	fmt.Println(cmd.Run())
+
+    // if err := cmd.Run(); err != nil {
+    //     fmt.Println(err)
+    // }
+    return
+
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
