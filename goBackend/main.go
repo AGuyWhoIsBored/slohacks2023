@@ -30,22 +30,6 @@ var commits = map[string]string{
 }
 
 func main() {
-
-	var asdf = []string{"AERO121", "AERO215", "AERO299"}
-	var classRequest = "sampleCoursesMissing.txt"
-	var classResults = "go-out.txt"
-    writeArrToFile("classRequest", asdf)
-    cmd := exec.Command("bash", "-c", "python3 ../pythonScripts/curriculum_validation.py" + " " + commits["Astronautics"] + " 2020-2021.json " + classRequest + " " + classResults)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	fmt.Println(cmd.Run())
-
-    // if err := cmd.Run(); err != nil {
-    //     fmt.Println(err)
-    // }
-    return
-
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
@@ -114,5 +98,14 @@ func validateClasses(c *gin.Context) {
 	// python3 PROJECT_DIR\curriculum_validation.py {curriculum txt} {course dabatase} {taken courses list} {outfile}
 	exec.Command("python3", "../pythonScripts/curriculum_validation.py", commits[valRequest.curriculumName], "../pythonScripts/2020-2021.json", classRequestFileName, classRequestResults)
 
-	c.IndentedJSON(http.StatusCreated, valRequest)
+	// read  output file
+
+	b, err := os.ReadFile(classRequestResults) // just pass the file name
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	res := string(b) // convert content to a 'string'
+
+	c.IndentedJSON(http.StatusCreated, res)
 }
