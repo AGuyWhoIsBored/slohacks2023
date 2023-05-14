@@ -17,7 +17,7 @@ var curriculumNames = []string{"Astronautics", "Aeronautics", "GRC for Packaging
 func main() {
 	router := gin.Default()
 	router.GET("/curriculum", getCurriculum)
-	router.POST("/albums", validateClasses)
+	router.POST("/curriculum", validateClasses)
 
 	router.Run("localhost:8080")
 }
@@ -39,5 +39,5 @@ func validateClasses(c *gin.Context) {
 
 	// add processing logic here
 
-	c.IndentedJSON(http.StatusCreated, newAlbum)
+	c.IndentedJSON(http.StatusCreated, valRequest)
 }
