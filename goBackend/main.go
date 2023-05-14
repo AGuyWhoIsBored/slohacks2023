@@ -14,8 +14,8 @@ import (
 )
 
 type classContext struct {
-	curriculumName string   `json:"curriculumName"`
-	classes        []string `json:"classes"`
+	CurriculumName string   `json:"curriculumName"`
+	Classes        []string `json:"classes"`
 }
 
 // Friendly list of curriculum names
@@ -88,24 +88,31 @@ func validateClasses(c *gin.Context) {
 		return
 	}
 
+	fmt.Print("printing val request")
+	fmt.Println(valRequest)
+
 	id := uuid.New()
 	var classRequestFileName = "classRequest-" + id.String()
+	var classRequestResults = "classResults-" + valRequest.CurriculumName + "-" + id.String()
 
-	var classRequestResults = "classResults-" + valRequest.curriculumName + "-" + id.String()
-
-	writeArrToFile(classRequestFileName, valRequest.classes)
+	writeArrToFile(classRequestFileName, valRequest.Classes)
 
 	// python3 PROJECT_DIR\curriculum_validation.py {curriculum txt} {course dabatase} {taken courses list} {outfile}
-	exec.Command("python3", "../pythonScripts/curriculum_validation.py", commits[valRequest.curriculumName], "../pythonScripts/2020-2021.json", classRequestFileName, classRequestResults)
+    cmd := exec.Command("bash", "-c", "python3 ../pythonScripts/curriculum_validation.py" + " " + commits[valRequest.CurriculumName] + " 2020-2021.json ../goBackend/" + classRequestFileName + " ../goBackend/" + classRequestResults)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	fmt.Print(cmd.Run())
 
-	// read  output file
-
+	// read output file
 	b, err := os.ReadFile(classRequestResults) // just pass the file name
 	if err != nil {
 		fmt.Print(err)
 	}
 
 	res := string(b) // convert content to a 'string'
+
+	os.Remove(classRequestFileName)
+	os.Remove(classRequestResults)
 
 	c.IndentedJSON(http.StatusCreated, res)
 }
