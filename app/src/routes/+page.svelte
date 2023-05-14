@@ -15,6 +15,19 @@
 	$: console.log('formattedclasses', formattedClasses);
 	$: console.log('selectedsheet', selectedCurriculumSheet);
 	$: console.log('validinput', validInput);
+
+	async function submitCurriculumValidationTask() {
+		await fetch('http://localhost:8080/curriculum', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				curriculumName: selectedCurriculumSheet,
+				classes: formattedClasses
+			})
+		});
+	}
 </script>
 
 <div class="appContainer m-4">
@@ -83,8 +96,10 @@
 							{:else}
 								<p class="ml-4 text-sm text-white">all good!</p>
 							{/if}
-							<button disabled={!validInput} class="w-[96%] mx-4 btn btn-success text-white mt-4"
-								>Submit</button
+							<button
+								disabled={!validInput}
+								class="w-[96%] mx-4 btn btn-success text-white mt-4"
+								on:click={submitCurriculumValidationTask}>Submit</button
 							>
 						</div>
 					</div>
