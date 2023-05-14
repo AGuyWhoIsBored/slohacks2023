@@ -1,0 +1,87 @@
+[
+  { "name": "Major Courses",
+    "type": "CompoundAnd",
+    "rules": [
+      { "name": "Required Courses",
+        "type": "And",
+        "classes": [
+          "AERO121",
+          "AERO215",
+          "AERO220",
+          "AERO299",
+          "AERO300",
+          "AERO302",
+          "AERO303",
+          "AERO320",
+          "AERO321",
+          "AERO331",
+          "AERO350",
+          "AERO431",
+          "AERO433",
+          "AERO460",
+          "AERO465",
+          "EE201",
+          "EE251"
+        ]
+      },
+      { "name": "Choice Courses",
+        "type": "CompoundOr",
+        "rules": [
+          { "name": "204 And 207",
+            "type": "And",
+            "classes": [
+              "CE204",
+              "CE207"
+            ]
+          },
+          { "name": "CE 208",
+            "type": "And",
+            "classes": [
+              "CE208"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  { "name": "Support Courses",
+    "type": "CompoundAnd",
+    "rules": [
+      { "name": "BIO 213 OR BMED/BRAE 213",
+        "type": "CompoundOr",
+        "rules": [
+          { "name": "BIO 213",
+            "type": "And",
+            "classes": ["BIO213"]
+          },
+          { "name": "BMED/BRAE 213",
+            "type": "Or",
+            "classes": ["BMED213", "BRAE213"]
+          }
+        ]
+      },
+
+      { "name": "Remaining Support",
+        "type": "And",
+        "classes": [
+          "BIO213",
+          "CHEM124",
+          "ENGL149",
+          "IME144",
+          "MATE210",
+          "MATH141",
+          "MATH142",
+          "MATH143",
+          "MATH241",
+          "MATH244",
+          "ME211",
+          "ME212",
+          "PHYS141",
+          "PHYS132",
+          "PHYS133",
+          "STAT312"
+        ]
+      }
+    ]
+  }
+]
