@@ -1,8 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"os"
+	"os/exec"
 	"time"
+
+	"github.com/google/uuid"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -15,6 +20,14 @@ type classContext struct {
 
 // Friendly list of curriculum names
 var curriculumNames = []string{"Astronautics", "Aeronautics", "GRC for Packaging", "GRC for Design Reproduction Technology", "GRC for Communication Managing"}
+
+var commits = map[string]string{
+	"Astronautics":                           "../pythonScripts/astronauticsCurriculum.txt",
+	"Aeronautics":                            "../pythonScripts/aeronauticsCurriculum.txt",
+	"GRC for Packaging":                      "../pythonScripts/grcPackingCurriculum.txt",
+	"GRC for Design Reproduction Technology": "../pythonScripts/grcReproductionCurriculum.txt",
+	"GRC for Communication Managing":         "../pythonScripts/grcManagementCurriculum.txt",
+}
 
 func main() {
 	router := gin.Default()
@@ -42,6 +55,29 @@ func getCurriculum(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, curriculumNames)
 }
 
+func writeArrToFile(classRequestFileName string, arr []string) {
+	f, err := os.Create(classRequestFileName)
+	if err != nil {
+		fmt.Println(err)
+		f.Close()
+		return
+	}
+
+	for _, class := range arr {
+		fmt.Fprintln(f, class)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}
+	err = f.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("file written successfully")
+}
+
 // validateClasses checks to see if the classContext fulfills the requirement for a degree
 func validateClasses(c *gin.Context) {
 	var valRequest classContext
@@ -52,7 +88,15 @@ func validateClasses(c *gin.Context) {
 		return
 	}
 
-	// add processing logic here
+	id := uuid.New()
+	var classRequestFileName = "classRequest-" + id.String()
+
+	var classRequestResults = "classResults-" + valRequest.curriculumName + "-" + id.String()
+
+	writeArrToFile(classRequestFileName, valRequest.classes)
+
+	// python3 PROJECT_DIR\curriculum_validation.py {curriculum txt} {course dabatase} {taken courses list} {outfile}
+	exec.Command("python3", "../pythonScripts/curriculum_validation.py", commits[valRequest.curriculumName], "../pythonScripts/2020-2021.json", classRequestFileName, classRequestResults)
 
 	c.IndentedJSON(http.StatusCreated, valRequest)
 }

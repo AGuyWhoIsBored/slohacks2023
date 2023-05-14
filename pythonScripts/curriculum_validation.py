@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import json_to_rules
 import rules
 import sys
@@ -28,6 +30,8 @@ def writeResult(outfileName, curriculum, courseDatabase):
 
 def main(args):
     # fail silently if incorrect number of args :)
+    # >:(
+    print("executing python script")
     if (len(args) != 5):
         return
 
