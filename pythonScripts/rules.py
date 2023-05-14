@@ -37,6 +37,11 @@ class OrClasses():
     def copy(self) -> 'OrClasses':
         return OrClasses(self.classes.copy(), self.name)
 
+    def getUnsatisfiedRules(self, classDatabase):
+        if self.isSatisfied(classDatabase):
+            return []
+        return [self.name]
+
 
 class AndClasses():
     def __init__(self, classes: set, name: str) -> None:
@@ -75,6 +80,11 @@ class AndClasses():
 
     def copy(self) -> 'AndClasses':
         return AndClasses(self.classes.copy(), self.getName)
+
+    def getUnsatisfiedRules(self, classDatabase):
+        if self.isSatisfied(classDatabase):
+            return []
+        return [self.name]
 
 
 class NUnitsOfClasses():
@@ -116,6 +126,11 @@ class NUnitsOfClasses():
 
     def copy(self) -> 'NUnitsOfClasses':
         return NUnitsOfClasses(self.classes.copy(), self.unitsRequired, self.name)
+
+    def getUnsatisfiedRules(self, classDatabase):
+        if self.isSatisfied(classDatabase):
+            return []
+        return [self.name]
 
 
 class NoDoubleCountRules():
@@ -189,6 +204,11 @@ class NoDoubleCountRules():
         usedClasses = set()
         return self.isSatisfiedHelper(ruleAndClassPairs, usedClasses, classDatabase)
 
+    def getUnsatisfiedRules(self, classDatabase):
+        if self.isSatisfied(classDatabase):
+            return []
+        return [self.name]
+
 
 class OrRules():
     def __init__(self, rules: set, name: str) -> None:
@@ -224,6 +244,11 @@ class OrRules():
         for rule in self.rules:
             rule.reset()
         self.satisfied = False
+
+    def getUnsatisfiedRules(self, classDatabase):
+        if self.isSatisfied(classDatabase):
+            return []
+        return [self.name]
 
 
 class AndRules():
@@ -265,6 +290,13 @@ class AndRules():
         self.rules = self.savedRules.copy()
         for rule in self.rules:
             rule.reset()
+
+    def getUnsatisfiedRules(self, classDatabase):
+        # only unsatisfied rules are in the rules set
+        ret = []
+        for rule in self.rules:
+            ret += (rule.name, rule.getUnsatisfiedRules(classDatabase))
+        return ret
 
 
 def main():

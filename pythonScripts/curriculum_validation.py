@@ -34,6 +34,7 @@ def main(args):
     curriculum = parseCurriculumFiles(args[1])
     courseDatabase = json_to_rules.parseCourseData(args[2])
     validateCourses(args[3], curriculum, courseDatabase)
+    print(curriculum.getUnsatisfiedRules(courseDatabase))
     writeResult(args[4], curriculum, courseDatabase)
 
 
